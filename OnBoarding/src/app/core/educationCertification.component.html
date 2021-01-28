@@ -1,0 +1,73 @@
+<p>
+  <mat-toolbar color="primary" *ngIf = "!isSummaryPage" >
+    <span class="p-2"> Professional Certification</span>
+    <span class="example-spacer"></span>
+  </mat-toolbar>
+</p>
+<form novalidate #formEC="ngForm" class="mb-3" (ngSubmit)="submitForm(formEC)" (reset)="resetForm()">
+  <div class="container-fluid">
+   
+  <div class="row" *ngFor="let controlec Of controlsEC.controlDetailsEC;let indEC = index">
+    <div class="form-row col-10">
+      <div class="form-group col-3">
+        <mat-form-field class="example-form-field">
+            <mat-label>Professional Certification</mat-label>
+            <input matInput type="text" name="nameOfCertifcation_{{controlec.educationCertificationId}}" [(ngModel)]="controlec.nameOfCertifcation" required>
+            <!-- <button mat-button *ngIf="controlDetailsEC.nameOfCertifcation" matSuffix mat-icon-button aria-label="Clear" (click)="controlDetailsEC.nameOfCertifcation=''">
+              <mat-icon color="primary" [inline]="true">close</mat-icon>
+            </button> -->
+        </mat-form-field>
+    </div>
+    <div class="form-group col-3">
+      <mat-form-field class="example-form-field">
+        <mat-label>Year of Passing</mat-label>
+        <input matInput type="text" name="year_{{controlec.educationCertificationId}}" [(ngModel)]="controlec.year" required minlength="4" maxlength="4">
+        <!-- <button mat-button *ngIf="controlDetailsEC.year" matSuffix mat-icon-button aria-label="Clear" (click)="controlDetailsEC.year=''">
+          <mat-icon color="primary" [inline]="true">close</mat-icon>
+        </button> -->
+    </mat-form-field>
+    </div>
+      <div class="form-group col-3">
+          <mat-form-field class="example-form-field">
+              <mat-label>Certification Number</mat-label>
+              <input matInput type="text" name="certificateNumber_{{controlec.educationCertificationId}}" [(ngModel)]="controlec.certificateNumber" required>
+              <!-- <button mat-button *ngIf="controlDetailsEC.certificateNumber" matSuffix mat-icon-button aria-label="Clear" (click)="controlDetailsEC.certificateNumber=''">
+                <mat-icon color="primary" [inline]="true">close</mat-icon>
+              </button> -->
+          </mat-form-field>
+      </div>
+      <div class="form-group col-3">
+        <!-- class="example-full-width" appearance="fill" -->
+        <mat-form-field>
+          <mat-label>Expiration Date</mat-label>
+          <input matInput [matDatepicker]="picker" name="expiryDateOfCertificate_{{controlec.educationCertificationId}}" [max]="getToday()" [(ngModel)]="controlec.expiryDateOfCertificate" required>
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-group col-1">
+      <button mat-button aria-label="Example icon button" *ngIf = "indEC > 0" (click)="deleteControlsEC(controlec)">X</button>
+    </div>
+  </div>
+  <div class="form-row col-11" *ngIf = "count < 3 "> 
+    <div class="form-group col-6">
+      <button type="button" class="btn btn-success m-1" *ngIf = "!editing && !isSummaryPage" (click)="addControlsEC(formEC)">+ Additional Certifications</button>
+      <!-- <button mat-button aria-label="Example icon button" (click)="addControlsEC(formEC)">+ Additional Certifications </button> -->
+    
+    </div> 
+  </div>
+  <div class="form-row col-10" *ngIf = "!isSummaryPage"> 
+    <div class="form-group col-3">
+      <button type="button" class="btn btn-success m-1" [class.btn-warning]="editing" (click)="getPersonalDetailsEC()">Previous</button>
+        <button type="submit" class="btn btn-success m-1"  
+        [disabled]="formEC.invalid || !isParentValid"> {{editing ? "Next" : "Next"}} 
+        </button> 
+    </div>
+    <div class="form-group col-3">
+    </div>    
+</div>
+  </div>
+</form>

@@ -1,0 +1,179 @@
+<p>
+    <mat-toolbar color="primary" *ngIf = "!isSummaryPage">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="p-2">CREATE PERSONAL DETAILS</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon favorite-icon" *ngIf = "!isSummaryPage" aria-label="Example icon-button with heart icon" class="m-2">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-icon-button class="example-icon" *ngIf = "!isSummaryPage" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+      </button>
+    </mat-toolbar>
+  </p>
+
+<form novalidate #form="ngForm" class="mb-3" (ngSubmit)="submitForm(form)" (reset)="resetForm()">
+    <div class="container-fluid">
+
+         
+    <div class="form-row col-11">
+    <div class="form-group col-3">
+        <mat-form-field class="example-form-field">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" name="title" [(ngModel)]="personalDetails.title" required>
+            <!-- <button mat-button *ngIf="personalDetails.title" matSuffix mat-icon-button aria-label="Clear" (click)="personalDetails.title=''">
+               <mat-icon color="primary" [inline]="true">close</mat-icon>
+            </button> -->
+        </mat-form-field>
+    </div>
+    <div class="form-group col-3">
+        <mat-form-field class="example-form-field">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" name="firstName" [(ngModel)]="personalDetails.firstName" required>
+            <!-- <button mat-button *ngIf="personalDetails.firstName" matSuffix mat-icon-button aria-label="Clear" (click)="personalDetails.firstName=''">
+              <mat-icon color="primary" [inline]="true">close</mat-icon>
+            </button> -->
+        </mat-form-field>
+    </div>
+    <div class="form-group col-3">
+        <mat-form-field class="example-form-field">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" name="lastName" [(ngModel)]="personalDetails.lastName" required>
+            <!-- <button mat-button *ngIf="personalDetails.lastName" matSuffix mat-icon-button aria-label="Clear" (click)="personalDetails.lastName=''">
+              <mat-icon color="primary" [inline]="true">close</mat-icon>
+            </button> -->
+        </mat-form-field>
+    </div>
+    <div class="form-group col-2">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Date Of Birth</mat-label>
+            <input matInput [matDatepicker]="picker" name="dateOfBirth" [max]="getToday()" [(ngModel)]="personalDetails.dateOfBirth" required>
+            <mat-datepicker-toggle matSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+    </div>
+    </div>
+    <div class="form-row col-10">
+        <div class="form-group col-3">
+            <mat-form-field class="example-form-field">
+                <mat-label>Cell Number</mat-label>
+                <input matInput  type="text" name="cellNumber" #cellnumber="ngModel" [(ngModel)]="personalDetails.cellNumber" required minlength="10" maxlength="10">
+                <!-- <button mat-button *ngIf="personalDetails.cellNumber" matSuffix mat-icon-button aria-label="Clear" (click)="personalDetails.cellNumber=''">
+                  <mat-icon color="primary" [inline]="true">close</mat-icon>
+                </button> -->
+                <!-- <mat-error *ngIf="form.errors && cellNumber?.errors?.pattern">
+                    Invalid CellNumber
+                </mat-error> -->
+            </mat-form-field>
+        </div>
+        <div class="form-group col-9">
+            <mat-form-field class="example-form-field col-11">
+                <mat-label >Current Address</mat-label>
+                <input matInput type="text" name="currentAddress" [(ngModel)]="personalDetails.currentAddress" required>
+                <!-- <button mat-button *ngIf="personalDetails.currentAddress" matSuffix mat-icon-button aria-label="Clear" (click)="personalDetails.currentAddress=''">
+                  <mat-icon color="primary" [inline]="true">close</mat-icon>
+                </button> -->
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="form-row col-11">
+        <div class="form-group col-3">
+            <mat-form-field>
+                <mat-label>Please Select State</mat-label>
+                <select matNativeControl  [(ngModel)]="personalDetails.stateId" name="stateId" 
+                (ngModelChange)="changeState(personalDetails.stateId)"
+                 required>
+                    <option *ngFor="let state of states" [ngValue]="state.stateId">
+                        {{state.stateName}}
+                    </option>
+                </select>
+            </mat-form-field>
+        </div>
+        <div class="form-group col-3">
+            <mat-form-field>
+                <mat-label>Please Select City</mat-label>
+                <select matNativeControl [(ngModel)]="personalDetails.cityId" name="cityId" required>
+                    <option *ngFor="let city of cities" [ngValue]="city.cityId">
+                        {{city.cityName}}
+                    </option> 
+                </select>                   
+            </mat-form-field>
+        </div>
+        <div class="form-group col-3">
+            <mat-form-field>
+                <mat-label>Pincode</mat-label>
+                <input matInput type="text" name="pincode" [(ngModel)]="personalDetails.pincode" required minlength="6" maxlength="6" >
+                <!-- <button mat-button *ngIf="personalDetails.pincode" matSuffix mat-icon-button aria-label="Clear" (click)="personalDetails.pincode=''">
+                  <mat-icon color="primary" [inline]="true">close</mat-icon>
+                </button> -->
+            </mat-form-field>
+        </div>
+        <div class="form-group col-3">
+            <mat-form-field>
+                <mat-label>Select Gender</mat-label>
+                <select matNativeControl [(ngModel)]="personalDetails.gender" name="gender" required>
+                    <option *ngFor="let gen of gender" [ngValue]="gen.genderType">
+                    {{gen.genderType}}
+                </option>  
+                </select>                   
+            </mat-form-field>
+        </div>
+        
+    </div>  
+    <div class="form-row col-11"> 
+       
+        <div class="form-group col-md-3">
+            <mat-form-field>
+                <mat-label>Select Blood Group</mat-label>
+                <select matNativeControl [(ngModel)]="personalDetails.bloodGroup" name="bloodGroup" required> 
+                    <option *ngFor="let blood of bloodGroup" [ngValue]="blood.bloodType">
+                        {{blood.bloodType}}
+                    </option> 
+                </select>                   
+            </mat-form-field>
+        </div>
+        
+        <div class="form-group col-md-3">
+            <mat-form-field>
+                <mat-label>Emergency Contact No</mat-label>
+                <input matInput type="text" name="emergencyContactNumber" [(ngModel)]="personalDetails.emergencyContactNumber" required minlength="10" maxlength="10" />
+                <!-- <button mat-button *ngIf="personalDetails.emergencyContactNumber" matSuffix mat-icon-button aria-label="Clear" (click)="personalDetails.emergencyContactNumber=''">
+                  <mat-icon color="primary" [inline]="true">close</mat-icon>
+                </button> -->
+            </mat-form-field>
+        </div>
+        <div class="form-group col-md-3">
+            <mat-form-field>
+                <mat-label>Personal Email ID</mat-label>
+                <input matInput type="text" name="personalEmailId" [(ngModel)]="personalDetails.personalEmailId" required email/> 
+                <!-- <button mat-button *ngIf="personalDetails.personalEmailId" matSuffix mat-icon-button aria-label="Clear" (click)="personalDetails.personalEmailId=''">
+                  <mat-icon color="primary" [inline]="true">close</mat-icon>
+                </button> -->
+            </mat-form-field>
+        </div>
+        <div class="form-group col-md-2">
+                <mat-form-field>
+                    <mat-label>Total Years Of Experience</mat-label>
+                    <input matInput type="text" name="totalYearsOfExperience" [(ngModel)]="personalDetails.totalYearsOfExperience" required />
+                    <!-- <button mat-button *ngIf="personalDetails.totalYearsOfExperience" matSuffix mat-icon-button aria-label="Clear" (click)="personalDetails.totalYearsOfExperience=''">
+                      <mat-icon color="primary" [inline]="true">close</mat-icon>
+                    </button> -->
+               </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="form-row col-11" *ngIf = "!isSummaryPage"> 
+    <div class="form-group col-3">
+        <button type="submit" class="btn btn-success m-1" [class.btn-warning]="editing" 
+        [disabled]="form.invalid"> {{editing ? "Next" : "Create"}} 
+        </button> 
+        <button type="reset" class="btn btn-secondary m-1">Cancel</button>
+    </div>
+    <div class="form-group col-3">
+    </div>    
+</div>
+</form>

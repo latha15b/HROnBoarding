@@ -1,0 +1,127 @@
+<p>
+    <mat-toolbar color="primary">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="p-2">PREVIOUS EMPLOYER DETAILS</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon favorite-icon" *ngIf = "!isSummaryPage" aria-label="Example icon-button with heart icon" class="m-2">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-icon-button class="example-icon" *ngIf = "!isSummaryPage" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+      </button>
+    </mat-toolbar>
+  </p>
+
+<form novalidate #form="ngForm" class="mb-3" (ngSubmit)="submitForm(form)" (reset)="resetForm()">
+  <div class="container-fluid">
+   
+  <div class="row border-bottom" *ngFor="let control Of controlsPE.controlDetailsPE;let ind = index"> 
+      <div class="form-row col-10">
+      <div class="form-group col-10">
+          <mat-form-field class="example-form-field col-12">
+              <mat-label>Previous Employer </mat-label>
+              <input matInput type="text" name="previousEmployerName_{{ind}}" [(ngModel)]="control.previousEmployerName" required>
+              <!-- <button mat-button *ngIf="previousEmployer.previousEmployerName" matSuffix mat-icon-button aria-label="Clear" (click)="previousEmployer.previousEmployerName=''">
+                <mat-icon color="primary" [inline]="true">close</mat-icon>
+              </button> -->
+          </mat-form-field>
+      </div>
+      </div>
+      <div class="form-row col-11">
+          <div class="form-group col-4 m-2">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Date Of Joining</mat-label>
+                    <input matInput [matDatepicker]="picker" name="dateOfJoining_{{ind}}" [max]="getToday()" [(ngModel)]="control.dateOfJoining" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                      <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+          </div>
+          <div class="form-group col-5 m-1">
+              <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Last Working Day</mat-label>
+                  <input matInput [matDatepicker]="pickerlast" name="lastWorkingDay_{{ind}}" [min]="control.dateOfJoining" [max]="getToday()" [(ngModel)]="control.lastWorkingDay" required>
+                  <mat-datepicker-toggle matSuffix [for]="pickerlast">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #pickerlast></mat-datepicker>
+                </mat-form-field>
+          </div>
+      </div>
+      <div class="form-row col-10" *ngIf = "ind == 0">
+          <div class="form-group col-10">
+              <mat-form-field class="example-form-field col-12">
+                  <mat-label>Reason for Leaving</mat-label>
+                  <input matInput type="text" name="reasonForLeaving_{{ind}}" [(ngModel)]="control.reasonForLeaving" required>
+                  <!-- <button mat-button *ngIf="previousEmployer.reasonForLeaving" matSuffix mat-icon-button aria-label="Clear" (click)="previousEmployer.reasonForLeaving=''">
+                    <mat-icon color="primary" [inline]="true">close</mat-icon>
+                  </button> -->
+              </mat-form-field>
+          </div>
+      </div>
+      <div class="form-row col-11" *ngIf = "ind == 0"> 
+          <div class="form-group col-3 m-2">
+              <mat-form-field>
+                  <mat-label>UAN Number</mat-label>
+                  <input matInput type="text" name="universalAccountNo_{{ind}}" [(ngModel)]="control.universalAccountNo" required />
+                  <!-- <button mat-button *ngIf="previousEmployer.universalAccountNo" matSuffix mat-icon-button aria-label="Clear" (click)="previousEmployer.universalAccountNo=''">
+                    <mat-icon color="primary" [inline]="true">close</mat-icon>
+                  </button> -->
+              </mat-form-field>
+          </div>
+          <div class="form-group col-6" *ngIf = "ind == 0">
+              <mat-form-field class="example-form-field col-6"> 
+                  <mat-label>PF Number</mat-label>
+                  <input matInput type="text" name="providentFundNo_{{ind}}" [(ngModel)]="control.providentFundNo" required/> 
+                  <!-- <button mat-button *ngIf="previousEmployer.providentFundNo" matSuffix mat-icon-button aria-label="Clear" (click)="previousEmployer.providentFundNo=''">
+                    <mat-icon color="primary" [inline]="true">close</mat-icon>
+                  </button> -->
+              </mat-form-field>
+          </div>
+      </div>
+      <div class="form-row col-11" *ngIf = "ind == 0"> 
+          <div class="form-group col-3 m-2">
+              <mat-form-field>
+                  <mat-label>Type Of PF</mat-label>
+                  <select matNativeControl [(ngModel)]="control.typeOfPFAccount" name="typeOfPFAccount_{{ind}}" required> 
+                      <option *ngFor="let typePF of typeOfPFAccount" [ngValue]="typePF.typeOfPFAccount">
+                          {{typePF.typeOfPFAccount}}
+                      </option> 
+                  </select>                   
+              </mat-form-field>
+          </div>
+          <div class="form-group col-6" *ngIf = "ind == 0">
+            <mat-form-field class="example-form-field col-6">
+                <mat-label>Are the Exit Formalites Complete</mat-label>
+                <select matNativeControl [(ngModel)]="control.areTheExitFormalitiesComplete" name="areTheExitFormalitiesComplete_{{ind}}" required> 
+                  <option *ngFor="let isComplete of areTheExitFormalitiesComplete" [ngValue]="isComplete.AreTheExitFormalitiesComplete">
+                        {{isComplete.AreTheExitFormalitiesComplete}}
+                    </option> 
+                </select>                   
+            </mat-form-field>
+        </div>
+      </div>
+    </div>
+      <div class="form-row col-11"> 
+        <div class="form-row col-10" *ngIf = "count < 3 "> 
+          <div class="form-group col-3">
+            <!-- <button mat-button  aria-label="Example icon button with a plus one icon"  (click)="addControlsPE(form)">
+            + Add Previous Employer
+            </button> -->
+            <button type="button" class="btn btn-success m-1" *ngIf = "!editing && !isSummaryPage" (click)="addControlsPE(form)">+ Add Previous Employer</button>
+          </div> 
+        </div>
+        <div class="form-group col-3" *ngIf = "!isSummaryPage">
+          <button type="button" class="btn btn-secondary m-1 btn-success" [class.btn-warning]="editing" (click)="getPersonalDetailsPE()">Previous</button>
+          <button type="submit" class="btn btn-success m-1" 
+          [disabled]="form.invalid"> {{editing ? "Next" : "Next"}} 
+          </button> 
+      </div>
+      <div class="form-group col-3">
+      </div>   
+      </div> 
+</div>
+</form>
