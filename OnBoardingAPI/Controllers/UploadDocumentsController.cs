@@ -242,8 +242,8 @@ namespace OnBoardingAPI.Controllers
                 client.Port = 587;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
-                //System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("latha.basavaraju@cai.io", "GANesh!%^0");
-                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("latha.15b@gmail.com", "T@lent15");
+                //System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("latha.basavaraju@cai.io", "******");
+                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("latha.15b@gmail.com", "******");
 
                 client.EnableSsl = true;
                 client.Credentials = credentials;
